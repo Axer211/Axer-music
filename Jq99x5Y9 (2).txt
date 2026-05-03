@@ -1089,7 +1089,7 @@ local HindiSongs = {
     {"Jhol", 121180010622504}, {"Maula Mere", 105017950345985}, {"Mann Mera", 140298499491642},
     {"Deewana", 88345320570909}, {"Naini Se Baan", 108734798852042}, {"Saawre", 111219978139804},
     {"Kesariya", 10059668834}, {"Apna Bana Le", 11005590115}, {"Raataan Lambiyan", 7384523412},
-    {"Ranjha", 9102384756}, {"Shayad", 6521458932}, {"Tujhe Kitna Chahne Lage", 5432678901},
+    {"Ranjha", 9102384756}, {"Shayad", 6521458932}, {"Tujhe Kitna Chahne Lage", 5432678901}, {Kabhi Kabhi rap", 137355570793959},
 }
 
 local RapsSongs = {
