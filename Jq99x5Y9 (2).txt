@@ -360,12 +360,23 @@ TabListLayout.Padding = UDim.new(0, 2)
 TabListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 TabListLayout.Parent = TabButtons
 
+-- =========================
+-- 📦 CONTENT AREA
+-- =========================
+
 local ContentArea = Instance.new("Frame")
 ContentArea.Size = UDim2.new(1, -125, 1, -40)
 ContentArea.Position = UDim2.new(0, 115, 0, 30)
 ContentArea.BackgroundColor3 = Color3.fromRGB(18, 18, 22)
-ContentArea.ZIndex = 2
+ContentArea.BorderSizePixel = 0
 ContentArea.Parent = Main
+
+Instance.new("UICorner", ContentArea).CornerRadius = UDim.new(0, 8)
+
+-- =========================
+-- 📊 PROGRESS BAR
+-- =========================
+
 local ProgressBarBG = Instance.new("Frame")
 ProgressBarBG.Size = UDim2.new(1, -20, 0, 6)
 ProgressBarBG.Position = UDim2.new(0, 10, 1, -20)
@@ -380,25 +391,54 @@ ProgressBar.BackgroundColor3 = Color3.fromRGB(0, 255, 120)
 ProgressBar.BorderSizePixel = 0
 ProgressBar.Parent = ProgressBarBG
 Instance.new("UICorner", ProgressBar).CornerRadius = UDim.new(1, 0)
-Instance.new("UICorner", ContentArea).CornerRadius = UDim.new(0, 8)
 
 -- =========================
--- 🎵 MUSIC BACKEND (CLEAN)
+-- 🎵 MUSIC BACKEND START
 -- =========================
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+
+local LocalPlayer = Players.LocalPlayer
 
 local RE = ReplicatedStorage:FindFirstChild("RE") or ReplicatedStorage:WaitForChild("RE", 5)
 local VehicleRemote = RE and RE:FindFirstChild("1NoMoto1rVehicle1s")
 local ClearRemote = RE and RE:FindFirstChild("1Clea1rTool1s")
 
-local RGBEnabled = false
 local SelectedVehicle = "SegwaySmall"
 
 -- =========================
--- 🎧 GET CURRENT SOUND (ONLY ONE)
+-- 🎧 SAFE PLAY FUNCTION
+-- =========================
+
+local function SmartPlayMusic(id, vehicleType, useRGB)
+    if not VehicleRemote then return end
+
+    task.spawn(function()
+        pcall(function()
+            VehicleRemote:FireServer("Delete NoMotorVehicle")
+            task.wait(0.1)
+
+            if ClearRemote then
+                ClearRemote:FireServer("ClearAllTools")
+            end
+
+            task.wait(0.2)
+            VehicleRemote:FireServer(vehicleType)
+
+            task.wait(1)
+            VehicleRemote:FireServer("PickingScooterMusicText", tostring(id))
+        end)
+    end)
+end
+
+-- =========================
+-- 🎧 GET CURRENT SOUND
 -- =========================
 
 local function getCurrentSound()
-    for _, v in pairs(workspace:GetDescendants()) do
+    for _, v in pairs(Workspace:GetDescendants()) do
         if v:IsA("Sound") and v.IsPlaying then
             return v
         end
@@ -407,49 +447,36 @@ local function getCurrentSound()
 end
 
 -- =========================
--- 📊 PROGRESS BAR (SAFE)
--- =========================
-
-task.spawn(function()
-    while true do
-        local sound = getCurrentSound()
-
-        if sound and sound.TimeLength > 0 then
-            local progress = sound.TimePosition / sound.TimeLength
-
-            if ProgressBar then
-                ProgressBar.Size = UDim2.new(progress, 0, 1, 0)
-            end
-        else
-            if ProgressBar then
-                ProgressBar.Size = UDim2.new(0, 0, 1, 0)
-            end
-        end
-
-        task.wait(0.1)
-    end
-end)
-
--- =========================
 -- 🎵 PLAYLIST SYSTEM (AUTO BUILD)
 -- =========================
 
 local Playlist = {}
 
 local function addSongs(tbl)
+    if not tbl then return end
     for _, song in pairs(tbl) do
-        if song[2] then
+        if typeof(song) == "table" and song[2] then
             table.insert(Playlist, tostring(song[2]))
         end
     end
 end
 
+-- 👇 SAFE ADD (error nahi aayega agar table missing ho)
 addSongs(HindiSongs)
 addSongs(RapsSongs)
 addSongs(BhojpuriSongs)
 addSongs(PhonkSongs)
 addSongs(MultiSongs)
 addSongs(SoundsSongs)
+
+-- ⚠️ fallback agar sab empty ho
+if #Playlist == 0 then
+    Playlist = {
+        "1843529600",
+        "9129992567",
+        "1837467330"
+    }
+end
 
 -- =========================
 -- 🎯 INDEX CONTROL
@@ -459,47 +486,47 @@ local currentIndex = 1
 local debounce = false
 
 -- =========================
--- ▶️ PLAY CURRENT
+-- ▶️ PLAY FUNCTIONS
 -- =========================
 
 local function playCurrent()
     local id = Playlist[currentIndex]
-
     if id then
         SmartPlayMusic(id, SelectedVehicle, false)
     end
 end
 
--- =========================
--- ⏭ NEXT SONG
--- =========================
-
 local function playNext()
-    currentIndex = currentIndex + 1
-
+    currentIndex += 1
     if currentIndex > #Playlist then
         currentIndex = 1
     end
-
     playCurrent()
 end
 
--- =========================
--- ⏮ PREVIOUS SONG
--- =========================
-
 local function playPrevious()
-    currentIndex = currentIndex - 1
-
+    currentIndex -= 1
     if currentIndex < 1 then
         currentIndex = #Playlist
     end
-
     playCurrent()
 end
 
 -- =========================
--- 🔄 AUTOPLAY SYSTEM (FIXED)
+-- 🔀 OPTIONAL SHUFFLE
+-- =========================
+
+local function shufflePlaylist()
+    for i = #Playlist, 2, -1 do
+        local j = math.random(i)
+        Playlist[i], Playlist[j] = Playlist[j], Playlist[i]
+    end
+end
+
+-- shufflePlaylist() -- enable if needed
+
+-- =========================
+-- 🔄 AUTOPLAY LOOP
 -- =========================
 
 task.spawn(function()
