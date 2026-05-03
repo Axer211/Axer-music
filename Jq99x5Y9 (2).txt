@@ -16,11 +16,11 @@ task.spawn(function()
     pcall(function()
         if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
             local channel = TextChatService.TextChannels:FindFirstChild("RBXGeneral")
-            if channel then channel:SendAsync("🔱⚠️Xdemic music loaded⚠️🔱") end
+            if channel then channel:SendAsync("⚜️AXER MUSIC⚜️") end
         else
             local sayEvent = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents")
             if sayEvent and sayEvent:FindFirstChild("SayMessageRequest") then
-                sayEvent.SayMessageRequest:FireServer("🔱⚠️Xdemic music loaded⚠️🔱", "All")
+                sayEvent.SayMessageRequest:FireServer("⚜️AXER MUSIC⚜️", "All")
             end
         end
     end)
@@ -96,7 +96,7 @@ local PopupText = Instance.new("TextLabel")
 PopupText.Size = UDim2.new(1, -20, 0, 40)
 PopupText.Position = UDim2.new(0, 10, 0.5, -40)
 PopupText.BackgroundTransparency = 1
-PopupText.Text = "Are you sure you want to close Xdemic Music V3?"
+PopupText.Text = "Are you sure you want to close Axer Music?"
 PopupText.TextColor3 = Color3.fromRGB(255, 255, 255)
 PopupText.Font = Enum.Font.GothamSemibold
 PopupText.TextSize = 12
@@ -165,6 +165,41 @@ end)
 MinimizedIcon.MouseButton1Click:Connect(function()
     Main.Visible = true
     MinimizedIcon.Visible = false
+end)
+
+-- Drag for Minimized Icon
+local draggingIcon, dragInputIcon, dragStartIcon, startPosIcon
+
+MinimizedIcon.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        draggingIcon = true
+        dragStartIcon = input.Position
+        startPosIcon = MinimizedIcon.Position
+
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                draggingIcon = false
+            end
+        end)
+    end
+end)
+
+MinimizedIcon.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+        dragInputIcon = input
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if input == dragInputIcon and draggingIcon then
+        local delta = input.Position - dragStartIcon
+        MinimizedIcon.Position = UDim2.new(
+            startPosIcon.X.Scale,
+            startPosIcon.X.Offset + delta.X,
+            startPosIcon.Y.Scale,
+            startPosIcon.Y.Offset + delta.Y
+        )
+    end
 end)
 
 -- Header & Drag
