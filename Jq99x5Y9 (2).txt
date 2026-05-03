@@ -366,6 +366,20 @@ ContentArea.Position = UDim2.new(0, 115, 0, 30)
 ContentArea.BackgroundColor3 = Color3.fromRGB(18, 18, 22)
 ContentArea.ZIndex = 2
 ContentArea.Parent = Main
+local ProgressBarBG = Instance.new("Frame")
+ProgressBarBG.Size = UDim2.new(1, -20, 0, 6)
+ProgressBarBG.Position = UDim2.new(0, 10, 1, -20)
+ProgressBarBG.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+ProgressBarBG.BorderSizePixel = 0
+ProgressBarBG.Parent = ContentArea
+Instance.new("UICorner", ProgressBarBG).CornerRadius = UDim.new(1, 0)
+
+local ProgressBar = Instance.new("Frame")
+ProgressBar.Size = UDim2.new(0, 0, 1, 0)
+ProgressBar.BackgroundColor3 = Color3.fromRGB(0, 255, 120)
+ProgressBar.BorderSizePixel = 0
+ProgressBar.Parent = ProgressBarBG
+Instance.new("UICorner", ProgressBar).CornerRadius = UDim.new(1, 0)
 Instance.new("UICorner", ContentArea).CornerRadius = UDim.new(0, 8)
 
 
@@ -376,6 +390,28 @@ local VehicleRemote = RE and RE:FindFirstChild("1NoMoto1rVehicle1s")
 local ClearRemote = RE and RE:FindFirstChild("1Clea1rTool1s")
 local RGBEnabled = false
 local SelectedVehicle = "SegwaySmall"
+local function getCurrentSound()
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("Sound") and v.IsPlaying then
+            return v
+        end
+    end
+    return nil
+end
+task.spawn(function()
+    while true do
+        local sound = getCurrentSound()
+
+        if sound and sound.TimeLength > 0 then
+            local progress = sound.TimePosition / sound.TimeLength
+            ProgressBar.Size = UDim2.new(progress, 0, 1, 0)
+        else
+            ProgressBar.Size = UDim2.new(0, 0, 1, 0)
+        end
+
+        task.wait(0.1)
+    end
+end)
 
 -- Save Playlist Data with LocalStorage
 local SavedPlaylist = {}
