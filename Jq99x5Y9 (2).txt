@@ -1,3 +1,4 @@
+print("AXER MUSIC LOADED SUCCESSFULLY⚜️")
 -- Xdemic Music V3 (Complete - LocalStorage Save + Shuffle + Props)
 local CoreGui = game:GetService("CoreGui")
 local UserInputService = game:GetService("UserInputService")
