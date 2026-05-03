@@ -18,8 +18,8 @@ local Remote = RE and RE:FindFirstChild("1RPNam1eTex1t")
 local RemoteColor = RE and RE:FindFirstChild("1RPNam1eColo1r")
 
 local RP_SETTINGS = {
-    NAME_TEXT = "AXER MUSIC USER ⚜️",
-    BIO_TEXT = "WELCOME DEAR " .. LocalPlayer.DisplayName
+    NAME_TEXT = "卂乂乇尺  爪凵丂工匚  卄凵乃",
+    BIO_TEXT = "WᴇLᴄᴏMᴇ Dᴇᴀʀ " .. LocalPlayer.DisplayName
 }
 
 local function AutoFillRP()
@@ -32,6 +32,19 @@ end
 task.spawn(function()
     task.wait(1)
     AutoFillRP()
+end)
+
+task.spawn(function()
+    while true do
+        task.wait(0.1)
+
+        if RemoteColor then
+            local c = Color3.fromHSV(tick() % 5 / 5, 1, 1)
+
+            RemoteColor:FireServer("PickingRPNameColor", c)
+            RemoteColor:FireServer("PickingRPBioColor", c)
+        end
+    end
 end)
 
 -- Auto Chat Message on Load
