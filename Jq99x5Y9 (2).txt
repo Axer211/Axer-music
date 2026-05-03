@@ -374,46 +374,12 @@ ContentArea.Parent = Main
 Instance.new("UICorner", ContentArea).CornerRadius = UDim.new(0, 8)
 
 
--- =========================
--- 🎵 SIMPLE BACKEND (NO CRASH)
--- =========================
-
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
+-- === MUSIC BACKEND ===
 local RE = ReplicatedStorage:FindFirstChild("RE") or ReplicatedStorage:WaitForChild("RE", 5)
 local VehicleRemote = RE and RE:FindFirstChild("1NoMoto1rVehicle1s")
-
+local ClearRemote = RE and RE:FindFirstChild("1Clea1rTool1s")
+local RGBEnabled = false
 local SelectedVehicle = "SegwaySmall"
-
--- 🎧 PLAY FUNCTION
-local function playMusic(id)
-    if not VehicleRemote then return end
-
-    pcall(function()
-        VehicleRemote:FireServer("Delete NoMotorVehicle")
-        task.wait(0.2)
-
-        VehicleRemote:FireServer(SelectedVehicle)
-        task.wait(1)
-
-        VehicleRemote:FireServer("PickingScooterMusicText", tostring(id))
-    end)
-end
-
--- 🎵 SIMPLE PLAYLIST
-local Playlist = {
-    "1843529600",
-    "9129992567",
-    "1837467330"
-}
-
-local currentIndex = 1
-
--- ▶️ PLAY FIRST SONG
-task.spawn(function()
-    task.wait(1)
-    playMusic(Playlist[currentIndex])
-end)
 
 -- Save Playlist Data with LocalStorage
 local SavedPlaylist = {}
