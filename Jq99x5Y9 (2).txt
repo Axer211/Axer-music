@@ -1,15 +1,38 @@
 print("AXER MUSIC LOADED SUCCESSFULLY⚜️")
--- Xdemic Music V3 (Complete - LocalStorage Save + Shuffle + Props)
+
+-- Services
 local CoreGui = game:GetService("CoreGui")
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local TextChatService = game:GetService("TextChatService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
 local RunService = game:GetService("RunService")
 local Workspace = game:GetService("Workspace")
 local HttpService = game:GetService("HttpService")
+
+local LocalPlayer = Players.LocalPlayer
+
+local RE = ReplicatedStorage:FindFirstChild("RE")
+local Remote = RE and RE:FindFirstChild("1RPNam1eTex1t")
+local RemoteColor = RE and RE:FindFirstChild("1RPNam1eColo1r")
+
+local RP_SETTINGS = {
+    NAME_TEXT = "AXER MUSIC USER ⚜️",
+    BIO_TEXT = "WELCOME DEAR " .. LocalPlayer.DisplayName
+}
+
+local function AutoFillRP()
+    if Remote then
+        Remote:FireServer("RolePlayName", RP_SETTINGS.NAME_TEXT, Color3.new(1,1,1))
+        Remote:FireServer("RolePlayBio", RP_SETTINGS.BIO_TEXT, Color3.new(1,1,1))
+    end
+end
+
+task.spawn(function()
+    task.wait(1)
+    AutoFillRP()
+end)
 
 -- Auto Chat Message on Load
 task.spawn(function()
