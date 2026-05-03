@@ -16,11 +16,11 @@ task.spawn(function()
     pcall(function()
         if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
             local channel = TextChatService.TextChannels:FindFirstChild("RBXGeneral")
-            if channel then channel:SendAsync("⚜️AXER MUSIC⚜️") end
+            if channel then channel:SendAsync("⚜️AXER MUSIC LOADED⚜️") end
         else
             local sayEvent = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents")
             if sayEvent and sayEvent:FindFirstChild("SayMessageRequest") then
-                sayEvent.SayMessageRequest:FireServer("⚜️AXER MUSIC⚜️", "All")
+                sayEvent.SayMessageRequest:FireServer("⚜️AXER MUSIC LOADED⚜️", "All")
             end
         end
     end)
@@ -277,12 +277,10 @@ local function applyClickAnimation(btn)
 end
 
 -- Layouts
-local TabButtons = Instance.new("Frame")
-TabButtons.Size = UDim2.new(0, 100, 1, -40)
-TabButtons.Position = UDim2.new(0, 10, 0, 30)
+local TabButtons = Instance.new("ScrollingFrame")
+TabButtons.CanvasSize = UDim2.new(0, 0, 0, 0)
+TabButtons.ScrollBarThickness = 4
 TabButtons.BackgroundTransparency = 1
-TabButtons.ZIndex = 2
-TabButtons.Parent = Main
 
 local TabListLayout = Instance.new("UIListLayout")
 TabListLayout.Padding = UDim.new(0, 2)
