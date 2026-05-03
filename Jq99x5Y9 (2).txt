@@ -241,6 +241,13 @@ Title.TextSize = 11
 Title.ZIndex = 5
 Title.TextXAlignment = Enum.TextXAlignment.Left
 Title.Parent = Header
+task.spawn(function()
+    while true do
+        local hue = (tick() * 0.25) % 1
+        Title.TextColor3 = Color3.fromHSV(hue, 1, 1)
+        task.wait(0.03)
+    end
+end)
 
 local CloseBtn = Instance.new("TextButton")
 CloseBtn.Size = UDim2.new(0, 20, 0, 20)
