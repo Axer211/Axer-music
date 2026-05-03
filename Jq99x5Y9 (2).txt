@@ -45,9 +45,30 @@ Main.Parent = ScreenGui
 Instance.new("UICorner", Main).CornerRadius = UDim.new(0, 10)
 
 local MainStroke = Instance.new("UIStroke")
-MainStroke.Color = Color3.fromRGB(0, 255, 120)
 MainStroke.Thickness = 1.5
 MainStroke.Parent = Main
+
+local GlowStroke = Instance.new("UIStroke")
+GlowStroke.Thickness = 4
+GlowStroke.Transparency = 0.7
+GlowStroke.Parent = Main
+
+MainStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+MainStroke.LineJoinMode = Enum.LineJoinMode.Round
+GlowStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+GlowStroke.LineJoinMode = Enum.LineJoinMode.Round
+
+task.spawn(function()
+    while true do
+        local hue = (tick() * 0.2) % 1
+        local color = Color3.fromHSV(hue, 1, 1)
+        
+        MainStroke.Color = color
+        GlowStroke.Color = color
+        
+        task.wait(0.02)
+    end
+end)
 
 -- Particle Engine
 local ParticleFrame = Instance.new("Frame")
@@ -213,7 +234,7 @@ local Title = Instance.new("TextLabel")
 Title.Size = UDim2.new(0.5, 0, 1, 0)
 Title.Position = UDim2.new(0, 10, 0, 0)
 Title.BackgroundTransparency = 1
-Title.Text = "Xdemic MUSIC V3"
+Title.Text = "AXER MUSIC V1"
 Title.TextColor3 = Color3.fromRGB(255, 255, 255)
 Title.Font = Enum.Font.GothamBlack
 Title.TextSize = 11
