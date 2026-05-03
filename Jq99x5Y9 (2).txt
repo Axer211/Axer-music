@@ -278,9 +278,13 @@ end
 
 -- Layouts
 local TabButtons = Instance.new("ScrollingFrame")
-TabButtons.CanvasSize = UDim2.new(0, 0, 0, 0)
-TabButtons.ScrollBarThickness = 4
+TabButtons.Size = UDim2.new(0, 100, 1, -40)
+TabButtons.Position = UDim2.new(0, 10, 0, 30)
 TabButtons.BackgroundTransparency = 1
+TabButtons.ScrollBarThickness = 4
+TabButtons.AutomaticCanvasSize = Enum.AutomaticSize.Y -- 🔥 ye use kar
+TabButtons.CanvasSize = UDim2.new(0,0,0,0) -- optional
+TabButtons.Parent = Main
 
 local TabListLayout = Instance.new("UIListLayout")
 TabListLayout.Padding = UDim.new(0, 2)
