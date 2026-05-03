@@ -382,12 +382,21 @@ ProgressBar.Parent = ProgressBarBG
 Instance.new("UICorner", ProgressBar).CornerRadius = UDim.new(1, 0)
 Instance.new("UICorner", ContentArea).CornerRadius = UDim.new(0, 8)
 
--- === MUSIC BACKEND ===
+-- =========================
+-- 🎵 MUSIC BACKEND (CLEAN)
+-- =========================
+
 local RE = ReplicatedStorage:FindFirstChild("RE") or ReplicatedStorage:WaitForChild("RE", 5)
 local VehicleRemote = RE and RE:FindFirstChild("1NoMoto1rVehicle1s")
 local ClearRemote = RE and RE:FindFirstChild("1Clea1rTool1s")
+
 local RGBEnabled = false
 local SelectedVehicle = "SegwaySmall"
+
+-- =========================
+-- 🎧 GET CURRENT SOUND (ONLY ONE)
+-- =========================
+
 local function getCurrentSound()
     for _, v in pairs(workspace:GetDescendants()) do
         if v:IsA("Sound") and v.IsPlaying then
@@ -396,19 +405,127 @@ local function getCurrentSound()
     end
     return nil
 end
+
+-- =========================
+-- 📊 PROGRESS BAR (SAFE)
+-- =========================
+
 task.spawn(function()
     while true do
         local sound = getCurrentSound()
 
         if sound and sound.TimeLength > 0 then
             local progress = sound.TimePosition / sound.TimeLength
-            ProgressBar.Size = UDim2.new(progress, 0, 1, 0)
+
+            if ProgressBar then
+                ProgressBar.Size = UDim2.new(progress, 0, 1, 0)
+            end
         else
-            ProgressBar.Size = UDim2.new(0, 0, 1, 0)
+            if ProgressBar then
+                ProgressBar.Size = UDim2.new(0, 0, 1, 0)
+            end
         end
 
         task.wait(0.1)
     end
+end)
+
+-- =========================
+-- 🎵 PLAYLIST SYSTEM (AUTO BUILD)
+-- =========================
+
+local Playlist = {}
+
+local function addSongs(tbl)
+    for _, song in pairs(tbl) do
+        if song[2] then
+            table.insert(Playlist, tostring(song[2]))
+        end
+    end
+end
+
+addSongs(HindiSongs)
+addSongs(RapsSongs)
+addSongs(BhojpuriSongs)
+addSongs(PhonkSongs)
+addSongs(MultiSongs)
+addSongs(SoundsSongs)
+
+-- =========================
+-- 🎯 INDEX CONTROL
+-- =========================
+
+local currentIndex = 1
+local debounce = false
+
+-- =========================
+-- ▶️ PLAY CURRENT
+-- =========================
+
+local function playCurrent()
+    local id = Playlist[currentIndex]
+
+    if id then
+        SmartPlayMusic(id, SelectedVehicle, false)
+    end
+end
+
+-- =========================
+-- ⏭ NEXT SONG
+-- =========================
+
+local function playNext()
+    currentIndex = currentIndex + 1
+
+    if currentIndex > #Playlist then
+        currentIndex = 1
+    end
+
+    playCurrent()
+end
+
+-- =========================
+-- ⏮ PREVIOUS SONG
+-- =========================
+
+local function playPrevious()
+    currentIndex = currentIndex - 1
+
+    if currentIndex < 1 then
+        currentIndex = #Playlist
+    end
+
+    playCurrent()
+end
+
+-- =========================
+-- 🔄 AUTOPLAY SYSTEM (FIXED)
+-- =========================
+
+task.spawn(function()
+    while true do
+        local sound = getCurrentSound()
+
+        if sound and sound.TimeLength > 0 then
+            if not debounce and sound.TimePosition >= (sound.TimeLength - 0.3) then
+                debounce = true
+                playNext()
+                task.wait(1)
+                debounce = false
+            end
+        end
+
+        task.wait(0.2)
+    end
+end)
+
+-- =========================
+-- 🚀 AUTO START
+-- =========================
+
+task.spawn(function()
+    task.wait(1)
+    playCurrent()
 end)
 
 -- Save Playlist Data with LocalStorage
