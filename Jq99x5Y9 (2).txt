@@ -327,62 +327,7 @@ ContentArea.ZIndex = 2
 ContentArea.Parent = Main
 Instance.new("UICorner", ContentArea).CornerRadius = UDim.new(0, 8)
 
--- =========================
--- 📌 INFO TAB BUTTON
--- =========================
-local InfoTab = Instance.new("TextButton")
-InfoTab.Size = UDim2.new(1, 0, 0, 30)
-InfoTab.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
-InfoTab.Text = "INFO"
-InfoTab.TextColor3 = Color3.fromRGB(255, 255, 255)
-InfoTab.Font = Enum.Font.GothamBold
-InfoTab.TextSize = 11
-InfoTab.Parent = TabButtons
-Instance.new("UICorner", InfoTab).CornerRadius = UDim.new(0, 6)
 
--- =========================
--- 📌 INFO PAGE
--- =========================
-local InfoPage = Instance.new("Frame")
-InfoPage.Size = UDim2.new(1, 0, 1, 0)
-InfoPage.BackgroundTransparency = 1
-InfoPage.Visible = false
-InfoPage.Parent = ContentArea
-
-local InfoText = Instance.new("TextLabel")
-InfoText.Size = UDim2.new(1, -20, 1, -20)
-InfoText.Position = UDim2.new(0, 10, 0, 10)
-InfoText.BackgroundTransparency = 1
-InfoText.Text = [[
-🎵 AXER MUSIC INFO
-
-• Version: V3
-• Made for entertainment
-• Features: RGB UI, Music System, Props Engine
-• Status: Active
-]]
-InfoText.TextColor3 = Color3.fromRGB(255, 255, 255)
-InfoText.TextWrapped = true
-InfoText.Font = Enum.Font.Gotham
-InfoText.TextSize = 12
-InfoText.TextXAlignment = Enum.TextXAlignment.Left
-InfoText.Parent = InfoPage
-
-=========================
--- 📌 TAB SWITCH SYSTEM
--- =========================
-local function showOnly(page)
-    for _, v in pairs(ContentArea:GetChildren()) do
-        if v:IsA("Frame") and v ~= page then
-            v.Visible = false
-        end
-    end
-    page.Visible = true
-end
-
-InfoTab.MouseButton1Click:Connect(function()
-    showOnly(InfoPage)
-end)
 
 -- === MUSIC BACKEND ===
 local RE = ReplicatedStorage:FindFirstChild("RE") or ReplicatedStorage:WaitForChild("RE", 5)
