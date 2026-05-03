@@ -373,186 +373,46 @@ ContentArea.Parent = Main
 
 Instance.new("UICorner", ContentArea).CornerRadius = UDim.new(0, 8)
 
--- =========================
--- 📊 PROGRESS BAR
--- =========================
-
-local ProgressBarBG = Instance.new("Frame")
-ProgressBarBG.Size = UDim2.new(1, -20, 0, 6)
-ProgressBarBG.Position = UDim2.new(0, 10, 1, -20)
-ProgressBarBG.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
-ProgressBarBG.BorderSizePixel = 0
-ProgressBarBG.Parent = ContentArea
-Instance.new("UICorner", ProgressBarBG).CornerRadius = UDim.new(1, 0)
-
-local ProgressBar = Instance.new("Frame")
-ProgressBar.Size = UDim2.new(0, 0, 1, 0)
-ProgressBar.BackgroundColor3 = Color3.fromRGB(0, 255, 120)
-ProgressBar.BorderSizePixel = 0
-ProgressBar.Parent = ProgressBarBG
-Instance.new("UICorner", ProgressBar).CornerRadius = UDim.new(1, 0)
 
 -- =========================
--- 🎵 MUSIC BACKEND START
+-- 🎵 SIMPLE BACKEND (NO CRASH)
 -- =========================
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Players = game:GetService("Players")
-local Workspace = game:GetService("Workspace")
-
-local LocalPlayer = Players.LocalPlayer
 
 local RE = ReplicatedStorage:FindFirstChild("RE") or ReplicatedStorage:WaitForChild("RE", 5)
 local VehicleRemote = RE and RE:FindFirstChild("1NoMoto1rVehicle1s")
-local ClearRemote = RE and RE:FindFirstChild("1Clea1rTool1s")
 
 local SelectedVehicle = "SegwaySmall"
 
--- =========================
--- 🎧 SAFE PLAY FUNCTION
--- =========================
-
-local function SmartPlayMusic(id, vehicleType, useRGB)
+-- 🎧 PLAY FUNCTION
+local function playMusic(id)
     if not VehicleRemote then return end
 
-    task.spawn(function()
-        pcall(function()
-            VehicleRemote:FireServer("Delete NoMotorVehicle")
-            task.wait(0.1)
+    pcall(function()
+        VehicleRemote:FireServer("Delete NoMotorVehicle")
+        task.wait(0.2)
 
-            if ClearRemote then
-                ClearRemote:FireServer("ClearAllTools")
-            end
+        VehicleRemote:FireServer(SelectedVehicle)
+        task.wait(1)
 
-            task.wait(0.2)
-            VehicleRemote:FireServer(vehicleType)
-
-            task.wait(1)
-            VehicleRemote:FireServer("PickingScooterMusicText", tostring(id))
-        end)
+        VehicleRemote:FireServer("PickingScooterMusicText", tostring(id))
     end)
 end
 
--- =========================
--- 🎧 GET CURRENT SOUND
--- =========================
-
-local function getCurrentSound()
-    for _, v in pairs(Workspace:GetDescendants()) do
-        if v:IsA("Sound") and v.IsPlaying then
-            return v
-        end
-    end
-    return nil
-end
-
--- =========================
--- 🎵 PLAYLIST SYSTEM (AUTO BUILD)
--- =========================
-
-local Playlist = {}
-
-local function addSongs(tbl)
-    if not tbl then return end
-    for _, song in pairs(tbl) do
-        if typeof(song) == "table" and song[2] then
-            table.insert(Playlist, tostring(song[2]))
-        end
-    end
-end
-
--- 👇 SAFE ADD (error nahi aayega agar table missing ho)
-addSongs(HindiSongs)
-addSongs(RapsSongs)
-addSongs(BhojpuriSongs)
-addSongs(PhonkSongs)
-addSongs(MultiSongs)
-addSongs(SoundsSongs)
-
--- ⚠️ fallback agar sab empty ho
-if #Playlist == 0 then
-    Playlist = {
-        "1843529600",
-        "9129992567",
-        "1837467330"
-    }
-end
-
--- =========================
--- 🎯 INDEX CONTROL
--- =========================
+-- 🎵 SIMPLE PLAYLIST
+local Playlist = {
+    "1843529600",
+    "9129992567",
+    "1837467330"
+}
 
 local currentIndex = 1
-local debounce = false
 
--- =========================
--- ▶️ PLAY FUNCTIONS
--- =========================
-
-local function playCurrent()
-    local id = Playlist[currentIndex]
-    if id then
-        SmartPlayMusic(id, SelectedVehicle, false)
-    end
-end
-
-local function playNext()
-    currentIndex += 1
-    if currentIndex > #Playlist then
-        currentIndex = 1
-    end
-    playCurrent()
-end
-
-local function playPrevious()
-    currentIndex -= 1
-    if currentIndex < 1 then
-        currentIndex = #Playlist
-    end
-    playCurrent()
-end
-
--- =========================
--- 🔀 OPTIONAL SHUFFLE
--- =========================
-
-local function shufflePlaylist()
-    for i = #Playlist, 2, -1 do
-        local j = math.random(i)
-        Playlist[i], Playlist[j] = Playlist[j], Playlist[i]
-    end
-end
-
--- shufflePlaylist() -- enable if needed
-
--- =========================
--- 🔄 AUTOPLAY LOOP
--- =========================
-
-task.spawn(function()
-    while true do
-        local sound = getCurrentSound()
-
-        if sound and sound.TimeLength > 0 then
-            if not debounce and sound.TimePosition >= (sound.TimeLength - 0.3) then
-                debounce = true
-                playNext()
-                task.wait(1)
-                debounce = false
-            end
-        end
-
-        task.wait(0.2)
-    end
-end)
-
--- =========================
--- 🚀 AUTO START
--- =========================
-
+-- ▶️ PLAY FIRST SONG
 task.spawn(function()
     task.wait(1)
-    playCurrent()
+    playMusic(Playlist[currentIndex])
 end)
 
 -- Save Playlist Data with LocalStorage
