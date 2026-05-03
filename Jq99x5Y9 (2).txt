@@ -368,12 +368,12 @@ InfoText.TextSize = 12
 InfoText.TextXAlignment = Enum.TextXAlignment.Left
 InfoText.Parent = InfoPage
 
--- =========================
+=========================
 -- 📌 TAB SWITCH SYSTEM
 -- =========================
 local function showOnly(page)
     for _, v in pairs(ContentArea:GetChildren()) do
-        if v:IsA("Frame") then
+        if v:IsA("Frame") and v ~= page then
             v.Visible = false
         end
     end
