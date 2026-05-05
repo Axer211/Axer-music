@@ -200,17 +200,17 @@ Instance.new("UICorner", NoBtn).CornerRadius = UDim.new(0, 4)
 
 YesBtn.MouseButton1Click:Connect(function()
 
-    -- 🌫️ Blur remove animation
-    TweenService:Create(Blur, TweenInfo.new(0.3), {
+    -- 🌫️ Blur remove (instant ya smooth)
+    TweenService:Create(Blur, TweenInfo.new(0.25), {
         Size = 0
     }):Play()
 
-    task.delay(0.35, function()
+    -- ⏳ wait karo taki blur hat jaye
+    task.delay(0.3, function()
         if Blur then Blur:Destroy() end
+        ScreenGui:Destroy()
     end)
 
-    -- GUI close
-    ScreenGui:Destroy()
 end)
 NoBtn.MouseButton1Click:Connect(function() Popup.Visible = false end)
 
