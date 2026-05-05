@@ -71,20 +71,15 @@ local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "XdemicMusicV3"
 ScreenGui.Parent = CoreGui
 
--- 🔵 BLUE BACKGROUND OVERLAY
-local BlueBG = Instance.new("Frame")
-BlueBG.Name = "BackgroundOverlay"
-BlueBG.Size = UDim2.new(1,0,1,0)
-BlueBG.Position = UDim2.new(0,0,0,0)
-BlueBG.BackgroundColor3 = Color3.fromRGB(0, 85, 255)
-BlueBG.BackgroundTransparency = 1
-BlueBG.ZIndex = 0
-BlueBG.Parent = ScreenGui
+local Blur = Instance.new("BlurEffect")
+Blur.Name = "AxerBlur"
+Blur.Size = 10
+Blur.Parent = game:GetService("Lighting")
 
 -- 🎬 Animation
 task.delay(0.1, function()
-    TweenService:Create(BlueBG, TweenInfo.new(0.4), {
-        BackgroundTransparency = 0.6
+    TweenService:Create(Blur, TweenInfo.new(0.4), {
+        Size = 12
     }):Play()
 end)
 
@@ -122,7 +117,6 @@ task.spawn(function()
         task.wait(0.02)
     end
 end)
-Main.ZIndex = 1
 
 -- Particle Engine
 local ParticleFrame = Instance.new("Frame")
