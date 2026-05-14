@@ -431,47 +431,62 @@ MinimizeBtn.Font = Enum.Font.GothamBold
 MinimizeBtn.TextSize = 14
 MinimizeBtn.ZIndex = 5
 MinimizeBtn.Parent = Main
+
 Instance.new("UICorner", MinimizeBtn).CornerRadius = UDim.new(0, 4)
 
+-- Minimized Icon
 local MinimizedIcon = Instance.new("TextButton")
 MinimizedIcon.Size = UDim2.new(0, 40, 0, 40)
 MinimizedIcon.Position = UDim2.new(1, -50, 0, 10)
 MinimizedIcon.BackgroundColor3 = Color3.fromRGB(135, 206, 235)
-MinimizedIcon.Text = "🎵"
+MinimizedIcon.Text = ""
 MinimizedIcon.TextColor3 = Color3.fromRGB(255, 255, 255)
 MinimizedIcon.Font = Enum.Font.GothamBold
 MinimizedIcon.TextSize = 20
 MinimizedIcon.Visible = false
 MinimizedIcon.ZIndex = 100
 MinimizedIcon.Parent = ScreenGui
+
 local stroke = Instance.new("UIStroke")
 stroke.Thickness = 2
 stroke.Parent = MinimizedIcon
 
 Instance.new("UICorner", MinimizedIcon).CornerRadius = UDim.new(1, 0)
 
-MinimizeBtn.MouseButton1Click:Connect(function()
-    Main.Visible = false
-    MinimizedIcon.Visible = true
+-- IMAGE ICON
+local IconImage = Instance.new("ImageLabel")
+IconImage.Parent = MinimizedIcon
+IconImage.Size = UDim2.new(1, -6, 1, -6)
+IconImage.Position = UDim2.new(0, 3, 0, 3)
+IconImage.BackgroundTransparency = 1
+IconImage.Image = "rbxassetid://82631845684765"
+IconImage.ScaleType = Enum.ScaleType.Fit
+IconImage.ZIndex = 101
 
-    -- 🌫️ Blur remove
-    if Blur then
-        TweenService:Create(Blur, TweenInfo.new(0.25), {
-            Size = 0
-        }):Play()
-    end
+-- Minimize
+MinimizeBtn.MouseButton1Click:Connect(function()
+	Main.Visible = false
+	MinimizedIcon.Visible = true
+
+	-- Blur remove
+	if Blur then
+		TweenService:Create(Blur, TweenInfo.new(0.25), {
+			Size = 0
+		}):Play()
+	end
 end)
 
+-- Restore
 MinimizedIcon.MouseButton1Click:Connect(function()
-    Main.Visible = true
-    MinimizedIcon.Visible = false
+	Main.Visible = true
+	MinimizedIcon.Visible = false
 
-    -- 🌫️ Blur wapas ON
-    if Blur then
-        TweenService:Create(Blur, TweenInfo.new(0.25), {
-            Size = 12
-        }):Play()
-    end
+	-- Blur ON
+	if Blur then
+		TweenService:Create(Blur, TweenInfo.new(0.25), {
+			Size = 12
+		}):Play()
+	end
 end)
 
 -- Drag for Minimized Icon
