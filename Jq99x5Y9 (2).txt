@@ -11,6 +11,7 @@ local RunService = game:GetService("RunService")
 local Workspace = game:GetService("Workspace")
 local HttpService = game:GetService("HttpService")
 local Lighting = game:GetService("Lighting")
+
 --// AXER MUSIC Compact Futuristic Intro
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
@@ -52,7 +53,7 @@ main.BackgroundTransparency = 1
 main.BorderSizePixel = 0
 
 local corner = Instance.new("UICorner")
-corner.CornerRadius = UDim.new(1,0)
+corner.CornerRadius = UDim.new(0,0)
 corner.Parent = main
 
 local stroke = Instance.new("UIStroke")
