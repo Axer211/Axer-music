@@ -51,7 +51,7 @@ main.BackgroundTransparency = 1
 main.BorderSizePixel = 0
 
 local corner = Instance.new("UICorner")
-corner.CornerRadius = UDim.new(0,0)
+corner.CornerRadius = UDim.new(2,0)
 corner.Parent = main
 
 local stroke = Instance.new("UIStroke")
@@ -397,7 +397,7 @@ IconImage.Parent = MinimizedIcon
 IconImage.Size = UDim2.new(1, -6, 1, -6)
 IconImage.Position = UDim2.new(0, 3, 0, 3)
 IconImage.BackgroundTransparency = 1
-IconImage.Image = "rbxassetid://72683129951761"
+IconImage.Image = "rbxassetid://121213068544360"
 IconImage.ScaleType = Enum.ScaleType.Fit
 IconImage.ZIndex = 101
 
