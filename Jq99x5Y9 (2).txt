@@ -11,8 +11,6 @@ local RunService = game:GetService("RunService")
 local Workspace = game:GetService("Workspace")
 local HttpService = game:GetService("HttpService")
 local Lighting = game:GetService("Lighting")
-local SoundService = game:GetService("SoundService")
-local Debris = game:GetService("Debris")
 
 --// AXER MUSIC Compact Futuristic Intro
 local player = Players.LocalPlayer
@@ -228,27 +226,6 @@ task.delay(0.1, function()
         Size = 12
     }):Play()
 end)
-
---===[[ Button press sound ]]===--
-local SoundService = game:GetService("SoundService")
-local Debris = game:GetService("Debris")
-
-local button = script.Parent
-
-local function ButtonPSound()
-    local sound = Instance.new("Sound")
-    sound.SoundId = "rbxassetid://1673280232"
-    sound.Volume = 5
-    sound.Parent = SoundService
-    sound:Play()
-
-    Debris:AddItem(sound, 10)
-end
-
-button.Activated:Connect(function()
-    ButtonPSound()
-end)
---===[[ End ]]===--
 
 -- Main Frame (400x300)
 local Main = Instance.new("Frame")
