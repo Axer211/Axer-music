@@ -459,7 +459,7 @@ IconImage.Parent = MinimizedIcon
 IconImage.Size = UDim2.new(1, -6, 1, -6)
 IconImage.Position = UDim2.new(0, 3, 0, 3)
 IconImage.BackgroundTransparency = 1
-IconImage.Image = "rbxassetid://71788992201611"
+IconImage.Image = "rbxassetid://101364958637925"
 IconImage.ScaleType = Enum.ScaleType.Fit
 IconImage.ZIndex = 101
 
