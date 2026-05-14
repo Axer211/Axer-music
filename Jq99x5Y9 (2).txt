@@ -16,7 +16,7 @@ local Lighting = game:GetService("Lighting")
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
--- GUI
+--// GUI SETUP
 local gui = Instance.new("ScreenGui")
 gui.Name = "AxerMusicIntro"
 gui.Parent = playerGui
@@ -24,30 +24,28 @@ gui.IgnoreGuiInset = true
 gui.ResetOnSpawn = false
 gui.DisplayOrder = 999999
 
--- Black Background
+--// BACKGROUND
 local bg = Instance.new("Frame")
 bg.Parent = gui
 bg.Size = UDim2.new(1,0,1,0)
 bg.BackgroundColor3 = Color3.fromRGB(0,0,0)
 bg.BorderSizePixel = 0
 
--- Blur
+--// BLUR
 local blur = Instance.new("BlurEffect")
 blur.Parent = Lighting
 blur.Size = 0
 
-TweenService:Create(
-blur,
-TweenInfo.new(1),
-{Size = 18}
-):Play()
+TweenService:Create(blur, TweenInfo.new(1), {
+	Size = 18
+}):Play()
 
--- Futuristic Shape
+--// MAIN FRAME
 local main = Instance.new("Frame")
 main.Parent = bg
 main.AnchorPoint = Vector2.new(0.5,0.5)
 main.Position = UDim2.new(0.5,0,0.5,0)
-main.Size = UDim2.new(0,0,0,0)
+main.Size = UDim2.new(0,500,0,300)
 main.BackgroundColor3 = Color3.fromRGB(12,12,12)
 main.BackgroundTransparency = 1
 main.BorderSizePixel = 0
@@ -62,16 +60,7 @@ stroke.Color = Color3.fromRGB(0,170,255)
 stroke.Thickness = 2
 stroke.Transparency = 1
 
--- Glow
-local glow = Instance.new("UIGradient")
-glow.Color = ColorSequence.new{
-ColorSequenceKeypoint.new(0, Color3.fromRGB(0,170,255)),
-ColorSequenceKeypoint.new(1, Color3.fromRGB(0,255,170))
-}
-glow.Rotation = 45
-glow.Parent = stroke
-
--- AXER MUSIC
+--// TITLE
 local title = Instance.new("TextLabel")
 title.Parent = main
 title.BackgroundTransparency = 1
@@ -83,19 +72,19 @@ title.TextSize = 42
 title.TextColor3 = Color3.fromRGB(255,255,255)
 title.TextTransparency = 1
 
--- Welcome Text
+--// WELCOME
 local welcome = Instance.new("TextLabel")
 welcome.Parent = main
 welcome.BackgroundTransparency = 1
 welcome.Size = UDim2.new(1,0,0.12,0)
 welcome.Position = UDim2.new(0,0,0.58,0)
 welcome.Font = Enum.Font.GothamBold
-welcome.Text = "WELCOME "..string.upper(player.Name)
+welcome.Text = "WELCOME " .. string.upper(player.Name)
 welcome.TextSize = 20
 welcome.TextColor3 = Color3.fromRGB(0,255,170)
 welcome.TextTransparency = 1
 
--- Status
+--// STATUS
 local status = Instance.new("TextLabel")
 status.Parent = main
 status.BackgroundTransparency = 1
@@ -107,228 +96,62 @@ status.TextSize = 16
 status.TextColor3 = Color3.fromRGB(0,255,255)
 status.TextTransparency = 1
 
--- Shape Animation
-TweenService:Create(
-main,
-TweenInfo.new(1.2,Enum.EasingStyle.Exponential,Enum.EasingDirection.Out),
-{
-Size = UDim2.new(0,500,0,300),
-BackgroundTransparency = 0.2
-}
-):Play()
+--// ANIMATION POP IN
+TweenService:Create(main, TweenInfo.new(1.2, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {
+	Size = UDim2.new(0,600,0,360),
+	BackgroundTransparency = 0.2
+}):Play()
 
-TweenService:Create(
-stroke,
-TweenInfo.new(1),
-{
-Transparency = 0
-local player = Players.LocalPlayer
-local playerGui = player:WaitForChild("PlayerGui")
-
--- GUI
-local gui = Instance.new("ScreenGui")
-gui.Name = "AXERINTRO"
-local player = Players.LocalPlayer
-local playerGui = player:WaitForChild("PlayerGui")
-
--- GUI
-local gui = Instance.new("ScreenGui")
-gui.Name = "AxerMusicIntro"
-gui.Parent = playerGui
-gui.IgnoreGuiInset = true
-gui.ResetOnSpawn = false
-
--- Black Background
-local bg = Instance.new("Frame")
-bg.Parent = gui
-bg.Size = UDim2.new(1,0,1,0)
-bg.BackgroundColor3 = Color3.fromRGB(0,0,0)
-bg.BorderSizePixel = 0
-
--- Blur
-local blur = Instance.new("BlurEffect")
-blur.Parent = Lighting
-blur.Size = 0
-
-TweenService:Create(
-	blur,
-	TweenInfo.new(1),
-	{Size = 18}
-):Play()
-
--- Futuristic Shape
-local main = Instance.new("Frame")
-main.Parent = bg
-main.AnchorPoint = Vector2.new(0.5,0.5)
-main.Position = UDim2.new(0.5,0,0.5,0)
-main.Size = UDim2.new(0,0,0,0)
-main.BackgroundColor3 = Color3.fromRGB(12,12,12)
-main.BackgroundTransparency = 1
-main.BorderSizePixel = 0
-
-local corner = Instance.new("UICorner")
-corner.CornerRadius = UDim.new(1,0)
-corner.Parent = main
-
-local stroke = Instance.new("UIStroke")
-stroke.Parent = main
-stroke.Color = Color3.fromRGB(0,170,255)
-stroke.Thickness = 2
-stroke.Transparency = 1
-
--- Glow
-local glow = Instance.new("UIGradient")
-glow.Color = ColorSequence.new{
-	ColorSequenceKeypoint.new(0, Color3.fromRGB(0,170,255)),
-	ColorSequenceKeypoint.new(1, Color3.fromRGB(0,255,170))
-}
-glow.Rotation = 45
-glow.Parent = stroke
-
--- AXER MUSIC
-local title = Instance.new("TextLabel")
-title.Parent = main
-title.BackgroundTransparency = 1
-title.Size = UDim2.new(1,0,0.3,0)
-title.Position = UDim2.new(0,0,0.28,0)
-title.Font = Enum.Font.GothamBlack
-title.Text = "AXER MUSIC"
-title.TextSize = 42
-title.TextColor3 = Color3.fromRGB(255,255,255)
-title.TextTransparency = 1
-
--- Welcome Text
-local welcome = Instance.new("TextLabel")
-welcome.Parent = main
-welcome.BackgroundTransparency = 1
-welcome.Size = UDim2.new(1,0,0.12,0)
-welcome.Position = UDim2.new(0,0,0.58,0)
-welcome.Font = Enum.Font.GothamBold
-welcome.Text = "WELCOME "..string.upper(player.Name)
-welcome.TextSize = 20
-welcome.TextColor3 = Color3.fromRGB(0,255,170)
-welcome.TextTransparency = 1
-
--- Status
-local status = Instance.new("TextLabel")
-status.Parent = main
-status.BackgroundTransparency = 1
-status.Size = UDim2.new(1,0,0.1,0)
-status.Position = UDim2.new(0,0,0.75,0)
-status.Font = Enum.Font.GothamMedium
-status.Text = "INITIALIZING..."
-status.TextSize = 16
-status.TextColor3 = Color3.fromRGB(0,255,255)
-status.TextTransparency = 1
-
--- Shape Animation
-TweenService:Create(
-	main,
-	TweenInfo.new(1.2,Enum.EasingStyle.Exponential,Enum.EasingDirection.Out),
-	{
-		Size = UDim2.new(0,500,0,300),
-		BackgroundTransparency = 0.2
-	}
-):Play()
-
-TweenService:Create(
-	stroke,
-	TweenInfo.new(1),
-	{
-		Transparency = 0
-	}
-):Play()
+TweenService:Create(stroke, TweenInfo.new(1), {
+	Transparency = 0
+}):Play()
 
 task.wait(1)
 
--- Text Fade In
-TweenService:Create(
-	title,
-	TweenInfo.new(1),
-	{
-		TextTransparency = 0
-	}
-):Play()
-
+--// TEXT FADE IN
+TweenService:Create(title, TweenInfo.new(1), {TextTransparency = 0}):Play()
 task.wait(0.3)
 
-TweenService:Create(
-	welcome,
-	TweenInfo.new(1),
-	{
-		TextTransparency = 0
-	}
-):Play()
-
+TweenService:Create(welcome, TweenInfo.new(1), {TextTransparency = 0}):Play()
 task.wait(0.2)
 
-TweenService:Create(
-	status,
-	TweenInfo.new(1),
-	{
-		TextTransparency = 0
-	}
-):Play()
+TweenService:Create(status, TweenInfo.new(1), {TextTransparency = 0}):Play()
 
--- Floating Animation
+--// FLOAT LOOP
 task.spawn(function()
 	while gui.Parent do
-		TweenService:Create(
-			main,
-			TweenInfo.new(2,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut),
-			{
-				Position = UDim2.new(0.5,0,0.49,0)
-			}
-		):Play()
+		TweenService:Create(main, TweenInfo.new(2), {
+			Position = UDim2.new(0.5,0,0.49,0)
+		}):Play()
 
 		task.wait(2)
 
-		TweenService:Create(
-			main,
-			TweenInfo.new(2,Enum.EasingStyle.Sine,Enum.EasingDirection.InOut),
-			{
-				Position = UDim2.new(0.5,0,0.5,0)
-			}
-		):Play()
+		TweenService:Create(main, TweenInfo.new(2), {
+			Position = UDim2.new(0.5,0,0.5,0)
+		}):Play()
 
 		task.wait(2)
 	end
 end)
 
--- Wait before fade out
+--// HOLD
 task.wait(4)
 
--- FULL FADE OUT
-TweenService:Create(bg,TweenInfo.new(1.5),{
-	BackgroundTransparency = 1
-}):Play()
+--// FADE OUT
+TweenService:Create(bg, TweenInfo.new(1.5), {BackgroundTransparency = 1}):Play()
+TweenService:Create(main, TweenInfo.new(1.5), {BackgroundTransparency = 1}):Play()
+TweenService:Create(stroke, TweenInfo.new(1.5), {Transparency = 1}):Play()
+TweenService:Create(title, TweenInfo.new(1.5), {TextTransparency = 1}):Play()
+TweenService:Create(welcome, TweenInfo.new(1.5), {TextTransparency = 1}):Play()
+TweenService:Create(status, TweenInfo.new(1.5), {TextTransparency = 1}):Play()
 
-TweenService:Create(main,TweenInfo.new(1.5),{
-	BackgroundTransparency = 1
-}):Play()
-
-TweenService:Create(stroke,TweenInfo.new(1.5),{
-	Transparency = 1
-}):Play()
-
-TweenService:Create(title,TweenInfo.new(1.5),{
-	TextTransparency = 1
-}):Play()
-
-TweenService:Create(welcome,TweenInfo.new(1.5),{
-	TextTransparency = 1
-}):Play()
-
-TweenService:Create(status,TweenInfo.new(1.5),{
-	TextTransparency = 1
-}):Play()
-
-TweenService:Create(blur,TweenInfo.new(1.5),{
+TweenService:Create(blur, TweenInfo.new(1.5), {
 	Size = 0
 }):Play()
 
 task.wait(1.6)
 
+--// CLEANUP
 blur:Destroy()
 gui:Destroy()
 
