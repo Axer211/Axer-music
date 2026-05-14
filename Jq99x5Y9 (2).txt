@@ -207,12 +207,12 @@ task.spawn(function()
     end)
 end)
 
-if CoreGui:FindFirstChild("XdemicMusicV3") then
-    CoreGui:FindFirstChild("XdemicMusicV3"):Destroy()
+if CoreGui:FindFirstChild("AxerMusicV1") then
+    CoreGui:FindFirstChild("AxerMusicV1"):Destroy()
 end
 
 local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "XdemicMusicV3"
+ScreenGui.Name = "AxerMusicV1"
 ScreenGui.Parent = CoreGui
 
 local Blur = Instance.new("BlurEffect")
@@ -226,6 +226,17 @@ task.delay(0.1, function()
         Size = 12
     }):Play()
 end)
+--===[[ Button press sound ]]===--
+local function ButtonPSound()
+local welcomeSound = Instance.new("Sound")
+welcomeSound.Name = "WelcomeSound"
+welcomeSound.SoundId = "rbxassetid://1673280232"
+welcomeSound.Volume = 5
+welcomeSound.Parent = game:GetService("SoundService")
+welcomeSound:Play()
+game:GetService("Debris"):AddItem(welcomeSound, 10)
+end
+--===[[ End ]]===--
 
 -- Main Frame (400x300)
 local Main = Instance.new("Frame")
