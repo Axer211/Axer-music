@@ -163,7 +163,7 @@ local RemoteColor = RE and RE:FindFirstChild("1RPNam1eColo1r")
 
 local RP_SETTINGS = {
     NAME_TEXT = "🎶卂乂乇尺  爪凵丂工匚  卄凵乃🎶",
-    BIO_TEXT = "WᴇLᴄᴏMᴇ Dᴇᴀʀ " .. LocalPlayer.DisplayName
+    BIO_TEXT = "ᴡᴇʟᴄᴏᴍᴇ ᴅᴇᴀʀ " .. LocalPlayer.DisplayName
 }
 
 local function AutoFillRP()
