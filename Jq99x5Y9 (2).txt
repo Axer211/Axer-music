@@ -12,11 +12,12 @@ local Workspace = game:GetService("Workspace")
 local HttpService = game:GetService("HttpService")
 local Lighting = game:GetService("Lighting")
 
---// AXER MUSIC Compact Futuristic Intro
+--// AXER MUSIC FUTURISTIC INTRO
+
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
---// GUI SETUP
+--// GUI
 local gui = Instance.new("ScreenGui")
 gui.Name = "AxerMusicIntro"
 gui.Parent = playerGui
@@ -31,14 +32,16 @@ bg.Size = UDim2.new(1,0,1,0)
 bg.BackgroundColor3 = Color3.fromRGB(0,0,0)
 bg.BorderSizePixel = 0
 
---// BLUR EFFECT
+--// BLUR
 local blur = Instance.new("BlurEffect")
 blur.Parent = Lighting
 blur.Size = 0
 
-TweenService:Create(blur, TweenInfo.new(1), {
-	Size = 18
-}):Play()
+TweenService:Create(
+	blur,
+	TweenInfo.new(1),
+	{Size = 20}
+):Play()
 
 --// MAIN FRAME
 local main = Instance.new("Frame")
@@ -50,37 +53,39 @@ main.BackgroundColor3 = Color3.fromRGB(12,12,12)
 main.BackgroundTransparency = 1
 main.BorderSizePixel = 0
 
+--// CORNERS
 local corner = Instance.new("UICorner")
-corner.CornerRadius = UDim.new(0,25)
+corner.CornerRadius = UDim.new(0,35)
 corner.Parent = main
 
+--// STROKE
 local stroke = Instance.new("UIStroke")
 stroke.Parent = main
-stroke.Color = Color3.fromRGB(0,170,255)
 stroke.Thickness = 2
 stroke.Transparency = 1
+stroke.Color = Color3.fromRGB(0,170,255)
 
 --// GLOW
 local glow = Instance.new("ImageLabel")
 glow.Parent = main
 glow.AnchorPoint = Vector2.new(0.5,0.5)
 glow.Position = UDim2.new(0.5,0,0.5,0)
-glow.Size = UDim2.new(1.2,0,1.2,0)
+glow.Size = UDim2.new(1.25,0,1.25,0)
 glow.BackgroundTransparency = 1
 glow.Image = "rbxassetid://5028857084"
 glow.ImageColor3 = Color3.fromRGB(0,170,255)
-glow.ImageTransparency = 0.8
+glow.ImageTransparency = 0.82
 glow.ZIndex = 0
 
 --// TITLE
 local title = Instance.new("TextLabel")
 title.Parent = main
 title.BackgroundTransparency = 1
-title.Size = UDim2.new(1,0,0.25,0)
-title.Position = UDim2.new(0,0,0.2,0)
+title.Size = UDim2.new(1,0,0.2,0)
+title.Position = UDim2.new(0,0,0.22,0)
 title.Font = Enum.Font.GothamBlack
 title.Text = "AXER MUSIC"
-title.TextSize = 42
+title.TextSize = 44
 title.TextColor3 = Color3.fromRGB(255,255,255)
 title.TextTransparency = 1
 
@@ -88,7 +93,7 @@ title.TextTransparency = 1
 local welcome = Instance.new("TextLabel")
 welcome.Parent = main
 welcome.BackgroundTransparency = 1
-welcome.Size = UDim2.new(1,0,0.1,0)
+welcome.Size = UDim2.new(1,0,0.08,0)
 welcome.Position = UDim2.new(0,0,0.5,0)
 welcome.Font = Enum.Font.GothamBold
 welcome.Text = "WELCOME " .. string.upper(player.Name)
@@ -100,7 +105,7 @@ welcome.TextTransparency = 1
 local status = Instance.new("TextLabel")
 status.Parent = main
 status.BackgroundTransparency = 1
-status.Size = UDim2.new(1,0,0.08,0)
+status.Size = UDim2.new(1,0,0.06,0)
 status.Position = UDim2.new(0,0,0.65,0)
 status.Font = Enum.Font.GothamMedium
 status.Text = "INITIALIZING..."
@@ -108,12 +113,12 @@ status.TextSize = 16
 status.TextColor3 = Color3.fromRGB(0,255,255)
 status.TextTransparency = 1
 
---// LOADING BAR BG
+--// LOADING BAR BACKGROUND
 local loadBg = Instance.new("Frame")
 loadBg.Parent = main
-loadBg.Size = UDim2.new(0.7,0,0,10)
-loadBg.Position = UDim2.new(0.15,0,0.8,0)
-loadBg.BackgroundColor3 = Color3.fromRGB(30,30,30)
+loadBg.Size = UDim2.new(0.72,0,0,12)
+loadBg.Position = UDim2.new(0.14,0,0.78,0)
+loadBg.BackgroundColor3 = Color3.fromRGB(35,35,35)
 loadBg.BorderSizePixel = 0
 loadBg.BackgroundTransparency = 1
 
@@ -132,102 +137,164 @@ local fillCorner = Instance.new("UICorner")
 fillCorner.CornerRadius = UDim.new(1,0)
 fillCorner.Parent = loadFill
 
---// PERCENT TEXT
+--// PERCENT
 local percent = Instance.new("TextLabel")
 percent.Parent = main
 percent.BackgroundTransparency = 1
 percent.Size = UDim2.new(1,0,0.05,0)
-percent.Position = UDim2.new(0,0,0.85,0)
+percent.Position = UDim2.new(0,0,0.84,0)
 percent.Font = Enum.Font.GothamBold
 percent.Text = "0%"
 percent.TextSize = 14
 percent.TextColor3 = Color3.fromRGB(255,255,255)
 percent.TextTransparency = 1
 
---// SCANNING LINE
-local scan = Instance.new("Frame")
-scan.Parent = main
-scan.Size = UDim2.new(1,0,0,2)
-scan.Position = UDim2.new(-1,0,0.05,0)
-scan.BackgroundColor3 = Color3.fromRGB(0,255,255)
-scan.BorderSizePixel = 0
-scan.BackgroundTransparency = 0.5
-
 --// POP IN
-TweenService:Create(main, TweenInfo.new(
-	1.2,
-	Enum.EasingStyle.Exponential,
-	Enum.EasingDirection.Out
-),{
-	Size = UDim2.new(0,600,0,360),
-	BackgroundTransparency = 0.15
-}):Play()
+TweenService:Create(
+	main,
+	TweenInfo.new(
+		1.2,
+		Enum.EasingStyle.Exponential,
+		Enum.EasingDirection.Out
+	),
+	{
+		Size = UDim2.new(0,620,0,370),
+		BackgroundTransparency = 0.12
+	}
+):Play()
 
-TweenService:Create(stroke, TweenInfo.new(1), {
-	Transparency = 0
-}):Play()
+TweenService:Create(
+	stroke,
+	TweenInfo.new(1),
+	{Transparency = 0}
+):Play()
 
 task.wait(1)
 
---// TEXT FADE IN
-TweenService:Create(title, TweenInfo.new(1), {
-	TextTransparency = 0
-}):Play()
+--// TEXT FADE
+TweenService:Create(
+	title,
+	TweenInfo.new(1),
+	{TextTransparency = 0}
+):Play()
 
-task.wait(0.3)
+task.wait(0.25)
 
-TweenService:Create(welcome, TweenInfo.new(1), {
-	TextTransparency = 0
-}):Play()
+TweenService:Create(
+	welcome,
+	TweenInfo.new(1),
+	{TextTransparency = 0}
+):Play()
 
 task.wait(0.2)
 
-TweenService:Create(status, TweenInfo.new(1), {
-	TextTransparency = 0
-}):Play()
+TweenService:Create(
+	status,
+	TweenInfo.new(1),
+	{TextTransparency = 0}
+):Play()
 
-TweenService:Create(percent, TweenInfo.new(1), {
-	TextTransparency = 0
-}):Play()
+TweenService:Create(
+	percent,
+	TweenInfo.new(1),
+	{TextTransparency = 0}
+):Play()
 
-TweenService:Create(loadBg, TweenInfo.new(1), {
-	BackgroundTransparency = 0
-}):Play()
+TweenService:Create(
+	loadBg,
+	TweenInfo.new(1),
+	{BackgroundTransparency = 0}
+):Play()
 
---// SCAN EFFECT
+--// FUTURISTIC COLOR LOOP
 task.spawn(function()
+
+	local futuristicColors = {
+		Color3.fromRGB(0,255,255),
+		Color3.fromRGB(0,170,255),
+		Color3.fromRGB(170,0,255),
+		Color3.fromRGB(255,0,170),
+		Color3.fromRGB(0,255,170),
+	}
+
+	local index = 1
+
 	while gui.Parent do
-		scan.Position = UDim2.new(-1,0,0.05,0)
 
-		TweenService:Create(scan, TweenInfo.new(
-			2,
-			Enum.EasingStyle.Linear
-		),{
-			Position = UDim2.new(1,0,0.05,0)
-		}):Play()
+		local nextIndex = index + 1
 
-		task.wait(2.2)
+		if nextIndex > #futuristicColors then
+			nextIndex = 1
+		end
+
+		local nextColor = futuristicColors[nextIndex]
+
+		TweenService:Create(
+			loadFill,
+			TweenInfo.new(1.2, Enum.EasingStyle.Linear),
+			{
+				BackgroundColor3 = nextColor
+			}
+		):Play()
+
+		TweenService:Create(
+			stroke,
+			TweenInfo.new(1.2, Enum.EasingStyle.Linear),
+			{
+				Color = nextColor
+			}
+		):Play()
+
+		TweenService:Create(
+			welcome,
+			TweenInfo.new(1.2, Enum.EasingStyle.Linear),
+			{
+				TextColor3 = nextColor
+			}
+		):Play()
+
+		TweenService:Create(
+			glow,
+			TweenInfo.new(1.2, Enum.EasingStyle.Linear),
+			{
+				ImageColor3 = nextColor
+			}
+		):Play()
+
+		index = nextIndex
+
+		task.wait(1.2)
 	end
 end)
 
---// FLOAT LOOP
+--// FLOAT EFFECT
 task.spawn(function()
+
 	while gui.Parent do
-		TweenService:Create(main, TweenInfo.new(2), {
-			Position = UDim2.new(0.5,0,0.49,0)
-		}):Play()
+
+		TweenService:Create(
+			main,
+			TweenInfo.new(2),
+			{
+				Position = UDim2.new(0.5,0,0.49,0)
+			}
+		):Play()
 
 		task.wait(2)
 
-		TweenService:Create(main, TweenInfo.new(2), {
-			Position = UDim2.new(0.5,0,0.5,0)
-		}):Play()
+		TweenService:Create(
+			main,
+			TweenInfo.new(2),
+			{
+				Position = UDim2.new(0.5,0,0.5,0)
+			}
+		):Play()
 
 		task.wait(2)
 	end
 end)
 
---// LOADING ANIMATION
+--// LOADING
 for i = 1,100 do
 
 	loadFill:TweenSize(
@@ -240,11 +307,11 @@ for i = 1,100 do
 
 	percent.Text = i .. "%"
 
-	if i < 30 then
+	if i < 25 then
 		status.Text = "INITIALIZING..."
-	elseif i < 60 then
+	elseif i < 50 then
 		status.Text = "LOADING MODULES..."
-	elseif i < 90 then
+	elseif i < 75 then
 		status.Text = "VERIFYING SYSTEM..."
 	else
 		status.Text = "FINALIZING..."
@@ -258,55 +325,72 @@ status.Text = "LOADED SUCCESSFULLY"
 task.wait(2)
 
 --// FADE OUT
-TweenService:Create(bg, TweenInfo.new(1.5), {
-	BackgroundTransparency = 1
-}):Play()
+TweenService:Create(
+	bg,
+	TweenInfo.new(1.5),
+	{BackgroundTransparency = 1}
+):Play()
 
-TweenService:Create(main, TweenInfo.new(1.5), {
-	BackgroundTransparency = 1
-}):Play()
+TweenService:Create(
+	main,
+	TweenInfo.new(1.5),
+	{BackgroundTransparency = 1}
+):Play()
 
-TweenService:Create(stroke, TweenInfo.new(1.5), {
-	Transparency = 1
-}):Play()
+TweenService:Create(
+	stroke,
+	TweenInfo.new(1.5),
+	{Transparency = 1}
+):Play()
 
-TweenService:Create(title, TweenInfo.new(1.5), {
-	TextTransparency = 1
-}):Play()
+TweenService:Create(
+	title,
+	TweenInfo.new(1.5),
+	{TextTransparency = 1}
+):Play()
 
-TweenService:Create(welcome, TweenInfo.new(1.5), {
-	TextTransparency = 1
-}):Play()
+TweenService:Create(
+	welcome,
+	TweenInfo.new(1.5),
+	{TextTransparency = 1}
+):Play()
 
-TweenService:Create(status, TweenInfo.new(1.5), {
-	TextTransparency = 1
-}):Play()
+TweenService:Create(
+	status,
+	TweenInfo.new(1.5),
+	{TextTransparency = 1}
+):Play()
 
-TweenService:Create(percent, TweenInfo.new(1.5), {
-	TextTransparency = 1
-}):Play()
+TweenService:Create(
+	percent,
+	TweenInfo.new(1.5),
+	{TextTransparency = 1}
+):Play()
 
-TweenService:Create(loadBg, TweenInfo.new(1.5), {
-	BackgroundTransparency = 1
-}):Play()
+TweenService:Create(
+	loadBg,
+	TweenInfo.new(1.5),
+	{BackgroundTransparency = 1}
+):Play()
 
-TweenService:Create(scan, TweenInfo.new(1.5), {
-	BackgroundTransparency = 1
-}):Play()
+TweenService:Create(
+	glow,
+	TweenInfo.new(1.5),
+	{ImageTransparency = 1}
+):Play()
 
-TweenService:Create(glow, TweenInfo.new(1.5), {
-	ImageTransparency = 1
-}):Play()
-
-TweenService:Create(blur, TweenInfo.new(1.5), {
-	Size = 0
-}):Play()
+TweenService:Create(
+	blur,
+	TweenInfo.new(1.5),
+	{Size = 0}
+):Play()
 
 task.wait(1.6)
 
 --// CLEANUP
 blur:Destroy()
 gui:Destroy()
+
 
 local LocalPlayer = Players.LocalPlayer
 
